@@ -378,6 +378,130 @@
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
+    .examples-section {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 0 20px 60px;
+      animation: fadeUp 0.6s 0.5s ease both;
+    }
+
+    .examples-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .examples-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .example-chip {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .example-chip:hover {
+      border-color: rgba(124,106,255,0.4);
+      color: var(--text);
+      background: var(--glow);
+    }
+
+    .how-section {
+      position: relative;
+      z-index: 10;
+      padding: 80px 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .how-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+
+    .how-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(124,106,255,0.3);
+      background: var(--glow);
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .how-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 48px;
+    }
+
+    .how-title em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .how-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 24px;
+      text-align: left;
+      position: relative;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .how-card:hover {
+      border-color: rgba(124,106,255,0.3);
+      transform: translateY(-3px);
+    }
+
+    .how-number {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .how-icon { font-size: 1.8rem; margin-bottom: 14px; }
+
+    .how-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .how-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+      font-weight: 300;
+    }
   </style>
 </head>
 <body>
@@ -410,6 +534,47 @@
   </div>
 </div>
 
+<!-- Example searches -->
+<div class="examples-section">
+  <p class="examples-label">Try searching for</p>
+  <div class="examples-row">
+    <button class="example-chip" onclick="quickSearch('Nike running shoes')">Nike running shoes</button>
+    <button class="example-chip" onclick="quickSearch('Spotify Premium offer')">Spotify Premium</button>
+    <button class="example-chip" onclick="quickSearch('IKEA furniture sale')">IKEA sale</button>
+    <button class="example-chip" onclick="quickSearch('H&M new collection')">H&M collection</button>
+    <button class="example-chip" onclick="quickSearch('McDonald burger ad')">McDonald's</button>
+    <button class="example-chip" onclick="quickSearch('Apple iPhone')">Apple iPhone</button>
+  </div>
+</div>
+
+<!-- How it works -->
+<div class="how-section">
+  <div class="how-inner">
+    <div class="how-tag">How it works</div>
+    <h2 class="how-title">Find any ad in <em>3 steps</em></h2>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-number">01</div>
+        <div class="how-icon">🧠</div>
+        <h3>Remember what you saw</h3>
+        <p>Describe anything — the brand, the product, the vibe, or even the colors. No exact name needed.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-number">02</div>
+        <div class="how-icon">🔍</div>
+        <h3>We search millions of ads</h3>
+        <p>AdScout scans Facebook, Instagram and more to find ads matching your description instantly.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-number">03</div>
+        <div class="how-icon">🎯</div>
+        <h3>Find it & revisit it</h3>
+        <p>Click through to the original ad, save it, or share it with friends. That's it!</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="loading" id="loading">
   <div class="loading-spinner"></div>
   <p>Searching ads...</p>
@@ -434,6 +599,11 @@
   function setFilter(btn, platform) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+  }
+
+  function quickSearch(term) {
+    document.getElementById('searchInput').value = term;
+    searchAds();
   }
 
   async function searchAds() {
