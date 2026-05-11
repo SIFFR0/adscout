@@ -684,9 +684,10 @@
   }
 
   async function searchAds() {
-    const homeInput = document.getElementById('homeInput').value.trim();
-    const resultsInput = document.getElementById('resultsInput').value.trim();
-    const query = homeInput || resultsInput;
+    const homeVisible = document.getElementById('homePage').style.display !== 'none';
+    const query = homeVisible
+      ? document.getElementById('homeInput').value.trim()
+      : document.getElementById('resultsInput').value.trim();
     if (!query) return;
 
     // Switch to loading
