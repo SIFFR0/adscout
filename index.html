@@ -116,9 +116,10 @@
       font-family: 'Syne', sans-serif;
       font-size: clamp(2.8rem, 6vw, 5rem);
       font-weight: 800;
-      line-height: 1.05;
+      line-height: 1.15;
       letter-spacing: -2px;
       margin-bottom: 20px;
+      overflow: visible;
       animation: fadeUp 0.6s 0.1s ease both;
     }
 
@@ -619,6 +620,7 @@
 
       document.getElementById('loading').style.display = 'none';
       document.getElementById('resultsSection').style.display = 'block';
+      document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
 
       const results = document.getElementById('results');
       results.innerHTML = '';
@@ -657,6 +659,7 @@
     } catch(err) {
       document.getElementById('loading').style.display = 'none';
       document.getElementById('resultsSection').style.display = 'block';
+      document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
       const displayAds = getMockAds(query);
       document.getElementById('demoBadge').style.display = 'block';
       document.getElementById('resultsCount').textContent = displayAds.length + ' ads found';
