@@ -1,437 +1,525 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AdScout</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --card: #16161f;
+      --border: #ffffff0f;
+      --accent: #7c6aff;
+      --accent2: #ff6a9a;
+      --text: #f0f0f5;
+      --muted: #6b6b80;
+      --glow: rgba(124, 106, 255, 0.15);
+    }
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--color-background-tertiary);
-    color: var(--color-text-primary);
-    min-height: 100vh;
-  }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-  .hero {
-    padding: 3rem 2rem 2rem;
-    text-align: center;
-  }
+    /* Background grid effect */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(124,106,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124,106,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-  .logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 2rem;
-    letter-spacing: -1px;
-    margin-bottom: 0.25rem;
-    color: var(--color-text-primary);
-  }
+    /* Glow orbs */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 500px;
+      background: radial-gradient(ellipse, rgba(124,106,255,0.12) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
 
-  .logo span {
-    color: #1D9E75;
-  }
+    header {
+      position: relative;
+      z-index: 10;
+      padding: 24px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
 
-  .tagline {
-    font-size: 0.85rem;
-    color: var(--color-text-secondary);
-    font-weight: 300;
-    margin-bottom: 2.5rem;
-    letter-spacing: 0.5px;
-  }
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.4rem;
+      letter-spacing: -0.5px;
+    }
 
-  .headline {
-    font-family: 'Syne', sans-serif;
-    font-size: 2.4rem;
-    font-weight: 800;
-    line-height: 1.15;
-    max-width: 560px;
-    margin: 0 auto 1rem;
-    letter-spacing: -1px;
-  }
+    .logo span { color: var(--accent); }
 
-  .headline em {
-    color: #1D9E75;
-    font-style: normal;
-  }
+    .logo-badge {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 500;
+      background: var(--glow);
+      border: 1px solid rgba(124,106,255,0.3);
+      color: var(--accent);
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-left: 10px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
 
-  .subheadline {
-    font-size: 1rem;
-    color: var(--color-text-secondary);
-    max-width: 420px;
-    margin: 0 auto 2.5rem;
-    line-height: 1.6;
-    font-weight: 300;
-  }
+    /* Hero */
+    .hero {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 100px 20px 60px;
+    }
 
-  .search-box {
-    background: var(--color-background-primary);
-    border: 0.5px solid var(--color-border-secondary);
-    border-radius: 16px;
-    padding: 1rem 1rem 1rem 1.25rem;
-    max-width: 620px;
-    margin: 0 auto 1rem;
-    display: flex;
-    align-items: flex-end;
-    gap: 0.75rem;
-  }
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(124,106,255,0.3);
+      background: var(--glow);
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+      animation: fadeUp 0.6s ease both;
+    }
 
-  .search-box textarea {
-    flex: 1;
-    border: none;
-    outline: none;
-    background: transparent;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.95rem;
-    color: var(--color-text-primary);
-    resize: none;
-    line-height: 1.5;
-    min-height: 48px;
-    max-height: 120px;
-  }
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 20px;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
 
-  .search-box textarea::placeholder {
-    color: var(--color-text-tertiary);
-  }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-  .search-btn {
-    background: #1D9E75;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 0.6rem 1.2rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 500;
-    cursor: pointer;
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: background 0.15s;
-    flex-shrink: 0;
-  }
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 48px;
+      line-height: 1.7;
+      font-weight: 300;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
 
-  .search-btn:hover { background: #0F6E56; }
+    /* Search */
+    .search-wrap {
+      max-width: 640px;
+      margin: 0 auto;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
 
-  .filters {
-    max-width: 620px;
-    margin: 0 auto 2.5rem;
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 6px 6px 6px 24px;
+      gap: 12px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
 
-  .filter-pill {
-    background: var(--color-background-primary);
-    border: 0.5px solid var(--color-border-tertiary);
-    border-radius: 999px;
-    padding: 0.3rem 0.9rem;
-    font-size: 0.8rem;
-    color: var(--color-text-secondary);
-    cursor: pointer;
-    transition: all 0.15s;
-    font-family: 'DM Sans', sans-serif;
-  }
+    .search-box:focus-within {
+      border-color: rgba(124,106,255,0.5);
+      box-shadow: 0 0 0 4px var(--glow);
+    }
 
-  .filter-pill:hover, .filter-pill.active {
-    background: #E1F5EE;
-    border-color: #5DCAA5;
-    color: #0F6E56;
-  }
+    .search-icon {
+      color: var(--muted);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
 
-  .results-section {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 0 1rem 3rem;
-  }
+    .search-box input {
+      flex: 1;
+      background: none;
+      border: none;
+      outline: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      color: var(--text);
+      font-weight: 400;
+    }
 
-  .results-label {
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: var(--color-text-tertiary);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-  }
+    .search-box input::placeholder { color: var(--muted); }
 
-  .ad-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
-  }
+    .search-btn {
+      background: linear-gradient(135deg, var(--accent), #9d56ff);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 28px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+      white-space: nowrap;
+    }
 
-  .ad-card {
-    background: var(--color-background-primary);
-    border: 0.5px solid var(--color-border-tertiary);
-    border-radius: var(--border-radius-lg);
-    overflow: hidden;
-    cursor: pointer;
-    transition: border-color 0.15s, transform 0.15s;
-  }
+    .search-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .search-btn:active { transform: translateY(0); }
 
-  .ad-card:hover {
-    border-color: var(--color-border-secondary);
-    transform: translateY(-2px);
-  }
+    /* Filters */
+    .filters {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
 
-  .ad-thumb {
-    width: 100%;
-    aspect-ratio: 4/3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-  }
+    .filter-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 7px 18px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.2s;
+    }
 
-  .ad-info {
-    padding: 0.75rem;
-    border-top: 0.5px solid var(--color-border-tertiary);
-  }
+    .filter-btn:hover, .filter-btn.active {
+      border-color: rgba(124,106,255,0.5);
+      color: var(--accent);
+      background: var(--glow);
+    }
 
-  .ad-brand {
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--color-text-primary);
-    margin-bottom: 2px;
-  }
+    /* Results */
+    .results-section {
+      position: relative;
+      z-index: 10;
+      max-width: 1000px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
 
-  .ad-desc {
-    font-size: 0.72rem;
-    color: var(--color-text-secondary);
-    line-height: 1.4;
-    margin-bottom: 0.5rem;
-  }
+    .results-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
 
-  .ad-meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+    .results-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      font-weight: 500;
+    }
 
-  .platform-badge {
-    font-size: 0.65rem;
-    padding: 2px 7px;
-    border-radius: 999px;
-    font-weight: 500;
-    background: #E1F5EE;
-    color: #0F6E56;
-  }
+    .results-count {
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
 
-  .visit-btn {
-    font-size: 0.7rem;
-    color: #1D9E75;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 3px;
-  }
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+    }
 
-  .empty-state {
-    text-align: center;
-    padding: 3rem 1rem;
-    color: var(--color-text-tertiary);
-    display: none;
-  }
+    .ad-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      animation: fadeUp 0.4s ease both;
+    }
 
-  .empty-state .icon {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    opacity: 0.3;
-  }
+    .ad-card:hover {
+      border-color: rgba(124,106,255,0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
 
-  .trending {
-    max-width: 700px;
-    margin: 0 auto 2rem;
-    padding: 0 1rem;
-  }
+    .ad-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
 
-  .trending-title {
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: var(--color-text-tertiary);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 0.75rem;
-  }
+    .ad-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+      font-family: 'Syne', sans-serif;
+    }
 
-  .trending-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
+    .ad-page { font-weight: 500; font-size: 0.95rem; }
 
-  .trending-tag {
-    font-size: 0.8rem;
-    color: var(--color-text-secondary);
-    background: var(--color-background-secondary);
-    border-radius: 999px;
-    padding: 0.25rem 0.75rem;
-    cursor: pointer;
-    border: 0.5px solid var(--color-border-tertiary);
-    transition: all 0.15s;
-  }
+    .ad-platform {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
 
-  .trending-tag:hover {
-    color: var(--color-text-primary);
-    border-color: var(--color-border-secondary);
-  }
+    .ad-body {
+      font-size: 0.9rem;
+      color: #b0b0c0;
+      line-height: 1.6;
+      margin-bottom: 16px;
+      font-weight: 300;
+    }
 
-  .loading {
-    display: none;
-    text-align: center;
-    padding: 2rem;
-    color: var(--color-text-secondary);
-    font-size: 0.9rem;
-  }
+    .ad-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-  .loading-dots::after {
-    content: '';
-    animation: dots 1.2s steps(4, end) infinite;
-  }
+    .ad-tag {
+      font-size: 0.7rem;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: var(--glow);
+      color: var(--accent);
+      border: 1px solid rgba(124,106,255,0.2);
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
 
-  @keyframes dots {
-    0%, 20% { content: ''; }
-    40% { content: '.'; }
-    60% { content: '..'; }
-    80%, 100% { content: '...'; }
-  }
-</style>
+    .ad-link {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
 
-<h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">AdScout — search for ads you've seen on social media</h2>
+    .ad-link:hover { color: var(--accent); }
+
+    .demo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,106,154,0.1);
+      border: 1px solid rgba(255,106,154,0.2);
+      color: var(--accent2);
+      font-size: 0.75rem;
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin: 0 auto 32px;
+      font-weight: 500;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 80px 20px;
+      display: none;
+    }
+
+    .loading-spinner {
+      width: 36px;
+      height: 36px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    .loading p { color: var(--muted); font-size: 0.9rem; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div style="display:flex;align-items:center">
+    <div class="logo">Ad<span>Scout</span></div>
+    <span class="logo-badge">Beta</span>
+  </div>
+  <div style="font-size:0.85rem;color:var(--muted)">Find any ad you've ever seen</div>
+</header>
 
 <div class="hero">
-  <div class="logo">Ad<span>Scout</span></div>
-  <div class="tagline">find any ad you've ever seen</div>
+  <div class="hero-tag">🔍 Ad Search Engine</div>
+  <h1>Saw an ad.<br>Can't find it <em>again?</em></h1>
+  <p>Search millions of ads from Facebook, Instagram and more. No brand name needed.</p>
 
-  <div class="headline">
-    Saw an ad.<br>Can't find it <em>again?</em>
-  </div>
-  <div class="subheadline">
-    Describe what you remember and we'll find it. No brand name needed.
-  </div>
-
-  <div class="search-box">
-    <textarea id="searchInput" placeholder="e.g. that Nike ad with the dog running on a beach, I think it was on Facebook last week..." rows="2"></textarea>
-    <button class="search-btn" onclick="doSearch()">
-      <i class="ti ti-search" aria-hidden="true"></i> Find it
-    </button>
-  </div>
-
-  <div class="filters">
-    <span class="filter-pill active" onclick="toggleFilter(this, 'all')">All platforms</span>
-    <span class="filter-pill" onclick="toggleFilter(this, 'facebook')"><i class="ti ti-brand-facebook" aria-hidden="true"></i> Facebook</span>
-    <span class="filter-pill" onclick="toggleFilter(this, 'instagram')"><i class="ti ti-brand-instagram" aria-hidden="true"></i> Instagram</span>
-    <span class="filter-pill" onclick="toggleFilter(this, 'tiktok')"><i class="ti ti-brand-tiktok" aria-hidden="true"></i> TikTok</span>
-    <span class="filter-pill" onclick="toggleFilter(this, 'youtube')"><i class="ti ti-brand-youtube" aria-hidden="true"></i> YouTube</span>
+  <div class="search-wrap">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="e.g. Nike running shoes, Spotify offer, IKEA..." />
+      <button class="search-btn" onclick="searchAds()">Find it</button>
+    </div>
+    <div class="filters">
+      <button class="filter-btn active" onclick="setFilter(this, 'all')">All platforms</button>
+      <button class="filter-btn" onclick="setFilter(this, 'facebook')">Facebook</button>
+      <button class="filter-btn" onclick="setFilter(this, 'instagram')">Instagram</button>
+      <button class="filter-btn" onclick="setFilter(this, 'tiktok')">TikTok</button>
+    </div>
   </div>
 </div>
 
-<div class="trending" id="trendingSection">
-  <div class="trending-title">People are searching for</div>
-  <div class="trending-tags">
-    <span class="trending-tag" onclick="fillSearch('funny car insurance ad')">funny car insurance ad</span>
-    <span class="trending-tag" onclick="fillSearch('shoe ad with a dog')">shoe ad with a dog</span>
-    <span class="trending-tag" onclick="fillSearch('food delivery ad animated')">food delivery ad animated</span>
-    <span class="trending-tag" onclick="fillSearch('blue phone case ad Instagram')">blue phone case Instagram</span>
-    <span class="trending-tag" onclick="fillSearch('gym ad motivational music')">gym ad motivational</span>
-    <span class="trending-tag" onclick="fillSearch('skincare before and after ad')">skincare before/after</span>
-  </div>
+<div class="loading" id="loading">
+  <div class="loading-spinner"></div>
+  <p>Searching ads...</p>
 </div>
 
 <div class="results-section" id="resultsSection" style="display:none">
-  <div class="results-label" id="resultsLabel">Results</div>
-  <div class="loading" id="loadingState">
-    <span class="loading-dots">Searching ads</span>
+  <div id="demoBadge" class="demo-badge" style="display:none">
+    ⚡ Demo mode — real ads coming soon
   </div>
-  <div class="ad-grid" id="adGrid"></div>
-  <div class="empty-state" id="emptyState">
-    <div class="icon"><i class="ti ti-search-off" aria-hidden="true"></i></div>
-    <div style="font-size:0.95rem; margin-bottom:0.5rem; color: var(--color-text-secondary)">No ads found for that description</div>
-    <div style="font-size:0.8rem">Try different keywords or be more specific about the product</div>
+  <div class="results-header">
+    <span class="results-label">Results</span>
+    <span class="results-count" id="resultsCount"></span>
   </div>
+  <div class="results-grid" id="results"></div>
 </div>
 
 <script>
-const mockAds = [
-  { brand: "Nike", desc: "Dog sprinting on a beach at sunset, inspirational voiceover", platform: "Facebook", emoji: "👟", color: "#E1F5EE", url: "nike.com" },
-  { brand: "Spotify", desc: "Wrapped 2024 — your year in music, animated stats", platform: "Instagram", emoji: "🎵", color: "#E6F1FB", url: "spotify.com" },
-  { brand: "Apple", desc: "Shot on iPhone — slow motion water drop close-up", platform: "YouTube", emoji: "📱", color: "#F1EFE8", url: "apple.com" },
-  { brand: "Gymshark", desc: "Before and after transformation, upbeat music", platform: "TikTok", emoji: "💪", color: "#FAEEDA", url: "gymshark.com" },
-  { brand: "HelloFresh", desc: "Chef cooking colorful pasta in a bright kitchen", platform: "Facebook", emoji: "🍝", color: "#EAF3DE", url: "hellofresh.com" },
-  { brand: "Duolingo", desc: "Duo owl crying then celebrating after lesson streak", platform: "TikTok", emoji: "🦉", color: "#EAF3DE", url: "duolingo.com" },
-];
+  document.getElementById('searchInput').addEventListener('keypress', e => {
+    if (e.key === 'Enter') searchAds();
+  });
 
-let activeFilter = 'all';
-
-function toggleFilter(el, val) {
-  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
-  el.classList.add('active');
-  activeFilter = val;
-}
-
-function fillSearch(text) {
-  document.getElementById('searchInput').value = text;
-  doSearch();
-}
-
-function doSearch() {
-  const query = document.getElementById('searchInput').value.trim();
-  if (!query) return;
-
-  const resultsSection = document.getElementById('resultsSection');
-  const trendingSection = document.getElementById('trendingSection');
-  const loadingState = document.getElementById('loadingState');
-  const adGrid = document.getElementById('adGrid');
-  const emptyState = document.getElementById('emptyState');
-  const resultsLabel = document.getElementById('resultsLabel');
-
-  resultsSection.style.display = 'block';
-  trendingSection.style.display = 'none';
-  loadingState.style.display = 'block';
-  adGrid.innerHTML = '';
-  emptyState.style.display = 'none';
-
-  setTimeout(() => {
-    loadingState.style.display = 'none';
-
-    let filtered = mockAds.filter(ad => {
-      if (activeFilter !== 'all' && ad.platform.toLowerCase() !== activeFilter) return false;
-      const q = query.toLowerCase();
-      return ad.brand.toLowerCase().includes(q) ||
-             ad.desc.toLowerCase().includes(q) ||
-             ad.platform.toLowerCase().includes(q) ||
-             q.split(' ').some(word => ad.desc.toLowerCase().includes(word) || ad.brand.toLowerCase().includes(word));
-    });
-
-    if (filtered.length === 0) filtered = mockAds.slice(0, 4);
-
-    resultsLabel.textContent = filtered.length + ' ads found for "' + query + '"';
-
-    filtered.forEach(ad => {
-      const card = document.createElement('div');
-      card.className = 'ad-card';
-      card.innerHTML = `
-        <div class="ad-thumb" style="background:${ad.color}">${ad.emoji}</div>
-        <div class="ad-info">
-          <div class="ad-brand">${ad.brand}</div>
-          <div class="ad-desc">${ad.desc}</div>
-          <div class="ad-meta">
-            <span class="platform-badge">${ad.platform}</span>
-            <span class="visit-btn"><i class="ti ti-external-link" aria-hidden="true"></i> Visit site</span>
-          </div>
-        </div>
-      `;
-      adGrid.appendChild(card);
-    });
-
-  }, 1200);
-}
-
-document.getElementById('searchInput').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' && !e.shiftKey) {
-    e.preventDefault();
-    doSearch();
+  function setFilter(btn, platform) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
   }
-});
+
+  async function searchAds() {
+    const query = document.getElementById('searchInput').value.trim();
+    if (!query) return;
+
+    document.getElementById('loading').style.display = 'block';
+    document.getElementById('resultsSection').style.display = 'none';
+
+    try {
+      const res = await fetch(`/search?q=${encodeURIComponent(query)}`);
+      const data = await res.json();
+
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+
+      const results = document.getElementById('results');
+      results.innerHTML = '';
+
+      const ads = data.data || [];
+      const isDemo = data.demo || ads.length === 0;
+
+      document.getElementById('demoBadge').style.display = isDemo ? 'block' : 'none';
+
+      const displayAds = ads.length > 0 ? ads : getMockAds(query);
+      document.getElementById('resultsCount').textContent = displayAds.length + ' ads found';
+
+      displayAds.forEach((ad, i) => {
+        const name = ad.page_name || query;
+        const body = ad.ad_creative_body || 'No description available.';
+        const initial = name.charAt(0).toUpperCase();
+        const card = document.createElement('div');
+        card.className = 'ad-card';
+        card.style.animationDelay = (i * 0.07) + 's';
+        card.innerHTML = `
+          <div class="ad-card-header">
+            <div class="ad-avatar">${initial}</div>
+            <div>
+              <div class="ad-page">${name}</div>
+              <div class="ad-platform">Facebook / Instagram</div>
+            </div>
+          </div>
+          <div class="ad-body">${body}</div>
+          <div class="ad-footer">
+            <span class="ad-tag">${isDemo ? 'Demo' : 'Live ad'}</span>
+            ${ad.ad_snapshot_url ? `<a class="ad-link" href="${ad.ad_snapshot_url}" target="_blank">View ad →</a>` : ''}
+          </div>
+        `;
+        results.appendChild(card);
+      });
+    } catch(err) {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+      const displayAds = getMockAds(query);
+      document.getElementById('demoBadge').style.display = 'block';
+      document.getElementById('resultsCount').textContent = displayAds.length + ' ads found';
+      const results = document.getElementById('results');
+      results.innerHTML = '';
+      displayAds.forEach((ad, i) => {
+        const card = document.createElement('div');
+        card.className = 'ad-card';
+        card.style.animationDelay = (i * 0.07) + 's';
+        card.innerHTML = `
+          <div class="ad-card-header">
+            <div class="ad-avatar">${ad.page_name.charAt(0)}</div>
+            <div>
+              <div class="ad-page">${ad.page_name}</div>
+              <div class="ad-platform">Facebook / Instagram</div>
+            </div>
+          </div>
+          <div class="ad-body">${ad.ad_creative_body}</div>
+          <div class="ad-footer"><span class="ad-tag">Demo</span></div>
+        `;
+        results.appendChild(card);
+      });
+    }
+  }
+
+  function getMockAds(query) {
+    return [
+      { page_name: query + ' Sverige', ad_creative_body: 'Upptäck våra senaste erbjudanden. Handla nu och få fri frakt på alla beställningar!' },
+      { page_name: query + ' Official', ad_creative_body: 'Begränsad tid! 30% rabatt på allt denna vecka. Missa inte detta erbjudande.' },
+      { page_name: query + ' Store', ad_creative_body: 'Nya produkter har anlänt. Hitta precis det du letar efter hos oss idag.' },
+      { page_name: query + ' SE', ad_creative_body: 'Tusentals nöjda kunder. Prova nu med 14 dagars öppet köp.' },
+    ];
+  }
 </script>
+</body>
+</html>
