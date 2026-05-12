@@ -3,95 +3,77 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AdScout</title>
+  <title>Scouto — Find the ad. Find the product.</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --bg: #0a0a0f;
-      --surface: #111118;
       --card: #16161f;
       --border: #ffffff0f;
       --accent: #7c6aff;
       --accent2: #ff6a9a;
+      --green: #00e5a0;
       --text: #f0f0f5;
       --muted: #6b6b80;
       --glow: rgba(124, 106, 255, 0.15);
+      --glow-green: rgba(0, 229, 160, 0.15);
     }
 
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
 
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(124,106,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(124,106,255,0.03) 1px, transparent 1px);
-      background-size: 60px 60px;
-      pointer-events: none;
-      z-index: 0;
-    }
+    body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(124,106,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(124,106,255,0.03) 1px, transparent 1px); background-size: 60px 60px; pointer-events: none; z-index: 0; }
 
-    body::after {
-      content: '';
-      position: fixed;
-      top: -200px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 800px;
-      height: 500px;
-      background: radial-gradient(ellipse, rgba(124,106,255,0.12) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
+    body::after { content: ''; position: fixed; top: -200px; left: 50%; transform: translateX(-50%); width: 800px; height: 500px; background: radial-gradient(ellipse, rgba(124,106,255,0.1) 0%, transparent 70%); pointer-events: none; z-index: 0; }
 
-    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; letter-spacing: -0.5px; cursor: pointer; }
-    .logo span { color: var(--accent); }
-    .logo-badge { font-size: 0.65rem; font-weight: 500; background: var(--glow); border: 1px solid rgba(124,106,255,0.3); color: var(--accent); padding: 2px 8px; border-radius: 20px; margin-left: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+    /* LOGO */
+    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem; letter-spacing: -1px; cursor: pointer; }
+    .logo .s1 { color: var(--accent); }
+    .logo .s2 { color: var(--accent2); }
+    .logo-badge { font-size: 0.65rem; background: var(--glow); border: 1px solid rgba(124,106,255,0.3); color: var(--accent); padding: 2px 8px; border-radius: 20px; margin-left: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
 
-    /* LANGUAGE SWITCHER */
+    /* LANG */
     .lang-switcher { display: flex; gap: 4px; }
     .lang-btn { background: var(--card); border: 1px solid var(--border); color: var(--muted); padding: 5px 12px; border-radius: 8px; font-size: 0.8rem; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
     .lang-btn.active { border-color: rgba(124,106,255,0.5); color: var(--accent); background: var(--glow); }
 
     /* HOME */
     #homePage { position: relative; z-index: 10; }
-    header.home-header { padding: 20px 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+    .home-header { padding: 20px 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
 
-    .hero { text-align: center; padding: 100px 20px 40px; }
+    .hero { text-align: center; padding: 90px 20px 40px; }
     .hero-tag { display: inline-block; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); border: 1px solid rgba(124,106,255,0.3); background: var(--glow); padding: 6px 16px; border-radius: 20px; margin-bottom: 28px; animation: fadeUp 0.6s ease both; }
-    .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 800; line-height: 1.15; letter-spacing: -2px; margin-bottom: 20px; overflow: visible; animation: fadeUp 0.6s 0.1s ease both; }
-    .hero h1 em { font-style: normal; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero p { font-size: 1.1rem; color: var(--muted); max-width: 480px; margin: 0 auto 48px; line-height: 1.7; font-weight: 300; animation: fadeUp 0.6s 0.2s ease both; }
+    .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.6rem, 6vw, 4.8rem); font-weight: 800; line-height: 1.15; letter-spacing: -2px; margin-bottom: 20px; overflow: visible; animation: fadeUp 0.6s 0.1s ease both; }
+    .hero h1 .grad1 { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero h1 .grad2 { background: linear-gradient(135deg, var(--green), #00b4d8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero p { font-size: 1.05rem; color: var(--muted); max-width: 500px; margin: 0 auto 48px; line-height: 1.7; font-weight: 300; animation: fadeUp 0.6s 0.2s ease both; }
 
+    /* MODE TABS (home) */
+    .mode-tabs { display: flex; justify-content: center; gap: 8px; margin-bottom: 24px; animation: fadeUp 0.6s 0.25s ease both; }
+    .mode-tab { display: flex; align-items: center; gap: 8px; padding: 10px 24px; border-radius: 12px; border: 1px solid var(--border); background: var(--card); color: var(--muted); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+    .mode-tab.active-ads { border-color: rgba(124,106,255,0.5); color: var(--accent); background: var(--glow); }
+    .mode-tab.active-products { border-color: rgba(0,229,160,0.5); color: var(--green); background: var(--glow-green); }
+
+    /* SEARCH */
     .search-wrap { max-width: 640px; margin: 0 auto; animation: fadeUp 0.6s 0.3s ease both; }
     .search-box { display: flex; align-items: center; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 6px 6px 6px 24px; gap: 12px; transition: border-color 0.2s, box-shadow 0.2s; }
-    .search-box:focus-within { border-color: rgba(124,106,255,0.5); box-shadow: 0 0 0 4px var(--glow); }
+    .search-box.mode-ads:focus-within { border-color: rgba(124,106,255,0.5); box-shadow: 0 0 0 4px var(--glow); }
+    .search-box.mode-products:focus-within { border-color: rgba(0,229,160,0.5); box-shadow: 0 0 0 4px var(--glow-green); }
     .search-box input { flex: 1; background: none; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 1rem; color: var(--text); }
     .search-box input::placeholder { color: var(--muted); }
-    .search-btn { background: linear-gradient(135deg, var(--accent), #9d56ff); color: white; border: none; border-radius: 12px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: opacity 0.2s, transform 0.1s; }
-    .search-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .search-btn-ads { background: linear-gradient(135deg, var(--accent), #9d56ff); color: white; border: none; border-radius: 12px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: opacity 0.2s, transform 0.1s; white-space: nowrap; }
+    .search-btn-products { background: linear-gradient(135deg, var(--green), #00b4d8); color: #0a0a0f; border: none; border-radius: 12px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: opacity 0.2s, transform 0.1s; white-space: nowrap; }
+    .search-btn-ads:hover, .search-btn-products:hover { opacity: 0.9; transform: translateY(-1px); }
 
-    .filters { display: flex; justify-content: center; gap: 8px; margin-top: 20px; flex-wrap: wrap; animation: fadeUp 0.6s 0.4s ease both; }
-    .filter-btn { background: var(--card); border: 1px solid var(--border); color: var(--muted); padding: 7px 18px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
-    .filter-btn:hover, .filter-btn.active { border-color: rgba(124,106,255,0.5); color: var(--accent); background: var(--glow); }
-
-    /* RECENT SEARCHES */
-    .recent-section { max-width: 640px; margin: 16px auto 0; text-align: left; animation: fadeUp 0.6s 0.4s ease both; }
+    /* RECENT */
+    .recent-section { max-width: 640px; margin: 16px auto 0; text-align: left; }
     .recent-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 10px; padding: 0 4px; }
     .recent-chips { display: flex; flex-wrap: wrap; gap: 8px; }
     .recent-chip { display: flex; align-items: center; gap: 6px; background: var(--card); border: 1px solid var(--border); color: var(--muted); padding: 6px 14px; border-radius: 20px; font-size: 0.82rem; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
     .recent-chip:hover { border-color: rgba(124,106,255,0.4); color: var(--text); }
-    .recent-chip .remove { color: var(--muted); font-size: 0.7rem; margin-left: 4px; opacity: 0.6; }
-    .recent-chip .remove:hover { opacity: 1; color: var(--accent2); }
+    .remove-btn { opacity: 0.5; margin-left: 4px; font-size: 0.7rem; }
+    .remove-btn:hover { opacity: 1; color: var(--accent2); }
 
     /* EXAMPLES */
     .examples-section { text-align: center; padding: 32px 20px 60px; animation: fadeUp 0.6s 0.5s ease both; }
@@ -102,29 +84,34 @@
 
     /* HOW IT WORKS */
     .how-section { padding: 80px 20px; border-top: 1px solid var(--border); }
-    .how-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+    .how-inner { max-width: 960px; margin: 0 auto; text-align: center; }
     .how-tag { display: inline-block; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); border: 1px solid rgba(124,106,255,0.3); background: var(--glow); padding: 6px 16px; border-radius: 20px; margin-bottom: 20px; }
     .how-title { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; letter-spacing: -1px; margin-bottom: 48px; }
     .how-title em { font-style: normal; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
-    .how-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 32px 24px; text-align: left; transition: border-color 0.2s, transform 0.2s; }
+    .how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+    .how-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 28px 20px; text-align: left; transition: border-color 0.2s, transform 0.2s; }
     .how-card:hover { border-color: rgba(124,106,255,0.3); transform: translateY(-3px); }
-    .how-number { font-family: 'Syne', sans-serif; font-size: 0.7rem; font-weight: 800; letter-spacing: 2px; color: var(--accent); margin-bottom: 12px; }
-    .how-icon { font-size: 1.8rem; margin-bottom: 14px; }
-    .how-card h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 10px; }
-    .how-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
+    .how-number { font-family: 'Syne', sans-serif; font-size: 0.7rem; font-weight: 800; letter-spacing: 2px; color: var(--accent); margin-bottom: 10px; }
+    .how-icon { font-size: 1.6rem; margin-bottom: 12px; }
+    .how-card h3 { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+    .how-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
 
     /* RESULTS PAGE */
     #resultsPage { display: none; position: relative; z-index: 10; min-height: 100vh; animation: fadeIn 0.3s ease; }
-    .results-header { position: sticky; top: 0; z-index: 100; background: rgba(10,10,15,0.9); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: 14px 32px; display: flex; align-items: center; gap: 20px; }
+    .results-header { position: sticky; top: 0; z-index: 100; background: rgba(10,10,15,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: 14px 32px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
     .results-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
-    .results-logo span { color: var(--accent); }
-    .results-search-box { flex: 1; max-width: 560px; display: flex; align-items: center; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 4px 4px 4px 18px; gap: 10px; transition: border-color 0.2s, box-shadow 0.2s; }
+    .results-logo .s1 { color: var(--accent); }
+    .results-logo .s2 { color: var(--accent2); }
+    .results-search-box { flex: 1; min-width: 200px; max-width: 500px; display: flex; align-items: center; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 4px 4px 4px 16px; gap: 10px; transition: border-color 0.2s, box-shadow 0.2s; }
     .results-search-box:focus-within { border-color: rgba(124,106,255,0.5); box-shadow: 0 0 0 3px var(--glow); }
     .results-search-box input { flex: 1; background: none; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; color: var(--text); }
-    .results-search-box input::placeholder { color: var(--muted); }
-    .results-search-btn { background: linear-gradient(135deg, var(--accent), #9d56ff); color: white; border: none; border-radius: 9px; padding: 10px 20px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: opacity 0.2s; }
-    .results-search-btn:hover { opacity: 0.9; }
+    .results-search-btn { background: linear-gradient(135deg, var(--accent), #9d56ff); color: white; border: none; border-radius: 9px; padding: 9px 18px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 500; cursor: pointer; }
+
+    /* RESULTS MODE TABS */
+    .results-tabs { display: flex; gap: 6px; }
+    .results-tab { display: flex; align-items: center; gap: 6px; padding: 8px 18px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); color: var(--muted); font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+    .results-tab.active-ads { border-color: rgba(124,106,255,0.5); color: var(--accent); background: var(--glow); }
+    .results-tab.active-products { border-color: rgba(0,229,160,0.5); color: var(--green); background: var(--glow-green); }
 
     .results-body { max-width: 1100px; margin: 40px auto; padding: 0 32px; }
     .results-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; flex-wrap: wrap; gap: 12px; }
@@ -145,19 +132,25 @@
     .ad-tag { font-size: 0.7rem; padding: 4px 10px; border-radius: 20px; background: var(--glow); color: var(--accent); border: 1px solid rgba(124,106,255,0.2); font-weight: 500; }
     .ad-link { font-size: 0.8rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     .ad-link:hover { color: var(--accent); }
-
-    /* FIND PRODUCT BUTTON */
-    .find-product-btn { font-size: 0.8rem; background: linear-gradient(135deg, var(--accent2), #ff4d7d); color: white; border: none; padding: 6px 14px; border-radius: 20px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; transition: opacity 0.2s; }
+    .find-product-btn { font-size: 0.8rem; background: linear-gradient(135deg, var(--green), #00b4d8); color: #0a0a0f; border: none; padding: 6px 14px; border-radius: 20px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 700; transition: opacity 0.2s; }
     .find-product-btn:hover { opacity: 0.85; }
 
-    /* PRODUCT MODAL */
+    /* PRODUCT CARDS */
+    .product-card { background: var(--card); border: 1px solid rgba(0,229,160,0.15); border-radius: 16px; padding: 24px; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; animation: fadeUp 0.4s ease both; text-decoration: none; color: var(--text); display: block; }
+    .product-card:hover { border-color: rgba(0,229,160,0.4); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+    .product-icon { font-size: 2rem; margin-bottom: 14px; }
+    .product-name { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    .product-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.5; margin-bottom: 16px; }
+    .product-cta { display: inline-flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 600; color: var(--green); }
+
+    /* MODAL */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(8px); animation: fadeIn 0.2s ease; }
     .modal { background: var(--card); border: 1px solid rgba(124,106,255,0.2); border-radius: 20px; padding: 32px; max-width: 500px; width: 100%; box-shadow: 0 24px 80px rgba(0,0,0,0.5); animation: fadeUp 0.3s ease; }
     .modal h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
     .modal p { color: var(--muted); font-size: 0.9rem; margin-bottom: 24px; line-height: 1.5; }
     .modal-links { display: flex; flex-direction: column; gap: 10px; }
-    .modal-link { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; text-decoration: none; color: var(--text); transition: border-color 0.2s, transform 0.2s; }
-    .modal-link:hover { border-color: rgba(124,106,255,0.4); transform: translateX(4px); }
+    .modal-link { display: flex; align-items: center; gap: 12px; background: #0a0a0f; border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; text-decoration: none; color: var(--text); transition: border-color 0.2s, transform 0.2s; }
+    .modal-link:hover { border-color: rgba(0,229,160,0.4); transform: translateX(4px); }
     .modal-link-icon { font-size: 1.4rem; }
     .modal-link-text { font-size: 0.9rem; font-weight: 500; }
     .modal-link-sub { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
@@ -180,7 +173,7 @@
 <div id="homePage">
   <header class="home-header">
     <div style="display:flex;align-items:center">
-      <div class="logo">Ad<span>Scout</span></div>
+      <div class="logo"><span class="s1">Sc</span><span class="s2">ou</span>to</div>
       <span class="logo-badge">Beta</span>
     </div>
     <div class="lang-switcher">
@@ -190,36 +183,34 @@
   </header>
 
   <div class="hero">
-    <div class="hero-tag">🔍 <span data-en="Ad Search Engine" data-sv="Annons-sökmotor">Ad Search Engine</span></div>
-    <h1 data-en="Saw an ad.<br>Can't find it <em>again?</em>" data-sv="Såg en annons.<br>Kan du inte hitta den <em>igen?</em>">Saw an ad.<br>Can't find it <em>again?</em></h1>
-    <p data-en="Search millions of ads from Facebook, Instagram and more. No brand name needed." data-sv="Sök bland miljontals annonser från Facebook, Instagram och mer. Inget varumärke behövs.">Search millions of ads from Facebook, Instagram and more. No brand name needed.</p>
+    <div class="hero-tag" id="heroTag">🔍 Ad & Product Search</div>
+    <h1 id="heroTitle">Find the <span class="grad1">ad.</span><br>Find the <span class="grad2">product.</span></h1>
+    <p id="heroSub">Search for any ad you've seen — or find a product you want to buy. Switch between modes anytime.</p>
+
+    <div class="mode-tabs">
+      <button class="mode-tab active-ads" id="homeTabAds" onclick="setMode('ads')">🎯 <span id="tabAdsLabel">Find Ads</span></button>
+      <button class="mode-tab" id="homeTabProducts" onclick="setMode('products')">🛍️ <span id="tabProductsLabel">Find Products</span></button>
+    </div>
 
     <div class="search-wrap">
-      <div class="search-box">
-        <span style="color:var(--muted)">🔍</span>
-        <input type="text" id="homeInput" data-en-placeholder="e.g. Nike running shoes, Spotify offer..." data-sv-placeholder="t.ex. Nike löparskor, Spotify-erbjudande..." placeholder="e.g. Nike running shoes, Spotify offer..." />
-        <button class="search-btn" onclick="searchAds()" data-en="Find it" data-sv="Hitta den">Find it</button>
-      </div>
-      <div class="filters">
-        <button class="filter-btn active" data-en="All platforms" data-sv="Alla plattformar">All platforms</button>
-        <button class="filter-btn">Facebook</button>
-        <button class="filter-btn">Instagram</button>
-        <button class="filter-btn">TikTok</button>
+      <div class="search-box mode-ads" id="homeSearchBox">
+        <span style="color:var(--muted)" id="homeSearchIcon">🎯</span>
+        <input type="text" id="homeInput" placeholder="e.g. Nike running shoes ad, Spotify offer..." />
+        <button class="search-btn-ads" id="homeSearchBtn" onclick="searchAds()">Find it</button>
       </div>
     </div>
 
-    <!-- Recent searches -->
     <div class="recent-section" id="recentSection" style="display:none">
-      <div class="recent-label" data-en="Recent searches" data-sv="Senaste sökningar">Recent searches</div>
+      <div class="recent-label" id="recentLabel">Recent searches</div>
       <div class="recent-chips" id="recentChips"></div>
     </div>
   </div>
 
   <div class="examples-section">
-    <p class="examples-label" data-en="Try searching for" data-sv="Prova att söka på">Try searching for</p>
-    <div class="examples-row">
+    <p class="examples-label" id="examplesLabel">Try searching for</p>
+    <div class="examples-row" id="examplesRow">
       <button class="example-chip" onclick="quickSearch('Nike running shoes')">Nike running shoes</button>
-      <button class="example-chip" onclick="quickSearch('Spotify Premium')">Spotify Premium</button>
+      <button class="example-chip" onclick="quickSearch('Spotify Premium offer')">Spotify Premium</button>
       <button class="example-chip" onclick="quickSearch('IKEA furniture sale')">IKEA sale</button>
       <button class="example-chip" onclick="quickSearch('H&M new collection')">H&M collection</button>
       <button class="example-chip" onclick="quickSearch('McDonald burger')">McDonald's</button>
@@ -229,46 +220,56 @@
 
   <div class="how-section">
     <div class="how-inner">
-      <div class="how-tag" data-en="How it works" data-sv="Hur det fungerar">How it works</div>
-      <h2 class="how-title" data-en="Find any ad in <em>3 steps</em>" data-sv="Hitta vilken annons som helst på <em>3 steg</em>">Find any ad in <em>3 steps</em></h2>
+      <div class="how-tag" id="howTag">How it works</div>
+      <h2 class="how-title" id="howTitle">Two tools. <em>One search.</em></h2>
       <div class="how-grid">
         <div class="how-card">
           <div class="how-number">01</div>
-          <div class="how-icon">🧠</div>
-          <h3 data-en="Remember what you saw" data-sv="Kom ihåg vad du såg">Remember what you saw</h3>
-          <p data-en="Describe anything — the brand, product, vibe, or colors. No exact name needed." data-sv="Beskriv vad som helst — varumärket, produkten, känslan eller färgerna.">Describe anything — the brand, product, vibe, or colors. No exact name needed.</p>
+          <div class="how-icon">🎯</div>
+          <h3 id="how1title">Find the Ad</h3>
+          <p id="how1desc">Saw an ad and can't find it again? Describe it and we'll track it down from Facebook, Instagram and more.</p>
         </div>
         <div class="how-card">
           <div class="how-number">02</div>
-          <div class="how-icon">🔍</div>
-          <h3 data-en="We search millions of ads" data-sv="Vi söker bland miljontals annonser">We search millions of ads</h3>
-          <p data-en="AdScout scans Facebook, Instagram and more to find matching ads instantly." data-sv="AdScout skannar Facebook, Instagram och mer för att hitta matchande annonser direkt.">AdScout scans Facebook, Instagram and more to find matching ads instantly.</p>
+          <div class="how-icon">🛍️</div>
+          <h3 id="how2title">Find the Product</h3>
+          <p id="how2desc">Want to buy something you saw advertised? Switch to product mode and we'll find it across all major shops.</p>
         </div>
         <div class="how-card">
           <div class="how-number">03</div>
-          <div class="how-icon">🎯</div>
-          <h3 data-en="Find it & buy it" data-sv="Hitta den & köp den">Find it & buy it</h3>
-          <p data-en="Click through to the original ad or find where to buy the product directly." data-sv="Klicka till originalannonsen eller hitta var du kan köpa produkten direkt.">Click through to the original ad or find where to buy the product directly.</p>
+          <div class="how-icon">⚡</div>
+          <h3 id="how3title">Switch anytime</h3>
+          <p id="how3desc">Already found the ad? Hit "Find product" to jump straight to shopping. Everything connected in one place.</p>
+        </div>
+        <div class="how-card">
+          <div class="how-number">04</div>
+          <div class="how-icon">🌍</div>
+          <h3 id="how4title">Works everywhere</h3>
+          <p id="how4desc">Available in Swedish and English. Searches ads and products relevant to your region automatically.</p>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ===== LOADING ===== -->
+<!-- LOADING -->
 <div class="loading" id="loading">
   <div class="loading-spinner"></div>
-  <p data-en="Searching ads..." data-sv="Söker annonser...">Searching ads...</p>
+  <p id="loadingText">Searching...</p>
 </div>
 
 <!-- ===== RESULTS PAGE ===== -->
 <div id="resultsPage">
   <div class="results-header">
-    <div class="results-logo" onclick="goHome()">Ad<span>Scout</span></div>
+    <div class="results-logo" onclick="goHome()"><span class="s1">Sc</span><span class="s2">ou</span>to</div>
     <div class="results-search-box">
       <span style="color:var(--muted)">🔍</span>
-      <input type="text" id="resultsInput" placeholder="Search ads..." />
-      <button class="results-search-btn" onclick="searchAds()" data-en="Search" data-sv="Sök">Search</button>
+      <input type="text" id="resultsInput" placeholder="Search..." />
+      <button class="results-search-btn" onclick="searchAds()">Search</button>
+    </div>
+    <div class="results-tabs">
+      <button class="results-tab active-ads" id="resultsTabAds" onclick="switchResultsMode('ads')">🎯 <span id="resultsTabAdsLabel">Ads</span></button>
+      <button class="results-tab" id="resultsTabProducts" onclick="switchResultsMode('products')">🛍️ <span id="resultsTabProductsLabel">Products</span></button>
     </div>
     <div class="lang-switcher">
       <button class="lang-btn active" onclick="setLang('en')">EN</button>
@@ -281,94 +282,178 @@
       <div class="results-query" id="resultsQuery"></div>
       <div class="results-count-badge" id="resultsCount"></div>
     </div>
-    <div id="demoBadge" class="demo-badge" style="display:none">⚡ <span data-en="Demo mode — real ads coming soon" data-sv="Demoläge — riktiga annonser kommer snart">Demo mode — real ads coming soon</span></div>
+    <div id="demoBadge" class="demo-badge" style="display:none">⚡ Demo mode — real ads coming soon</div>
     <div class="results-grid" id="results"></div>
   </div>
 </div>
 
-<!-- ===== PRODUCT MODAL ===== -->
+<!-- PRODUCT MODAL -->
 <div id="productModal" class="modal-overlay" style="display:none" onclick="closeModal(event)">
   <div class="modal">
     <h3 id="modalTitle">Find this product</h3>
-    <p id="modalDesc">Search for this product across multiple shopping platforms.</p>
+    <p id="modalDesc"></p>
     <div class="modal-links" id="modalLinks"></div>
-    <button class="modal-close" onclick="document.getElementById('productModal').style.display='none'" data-en="Close" data-sv="Stäng">Close</button>
+    <button class="modal-close" onclick="document.getElementById('productModal').style.display='none'">Close</button>
   </div>
 </div>
 
 <script>
   let currentLang = 'en';
+  let currentMode = 'ads';
+  let lastQuery = '';
+  let lastAdsData = [];
+  let lastIsDemo = false;
 
   // AUTO DETECT LANGUAGE
   const browserLang = navigator.language || navigator.userLanguage;
   if (browserLang.startsWith('sv')) setLang('sv');
 
+  const T = {
+    en: {
+      heroTag: '🔍 Ad & Product Search',
+      heroTitle: 'Find the <span class="grad1">ad.</span><br>Find the <span class="grad2">product.</span>',
+      heroSub: "Search for any ad you've seen — or find a product you want to buy. Switch between modes anytime.",
+      tabAds: 'Find Ads', tabProducts: 'Find Products',
+      searchPlaceholderAds: 'e.g. Nike running shoes ad, Spotify offer...',
+      searchPlaceholderProducts: 'e.g. wireless headphones, red sneakers...',
+      findItAds: 'Find Ad', findItProducts: 'Find Product',
+      recentLabel: 'Recent searches', examplesLabel: 'Try searching for',
+      howTag: 'How it works', howTitle: 'Two tools. <em>One search.</em>',
+      how1title: 'Find the Ad', how1desc: "Saw an ad and can't find it again? Describe it and we'll track it down from Facebook, Instagram and more.",
+      how2title: 'Find the Product', how2desc: "Want to buy something you saw advertised? Switch to product mode and we'll find it across all major shops.",
+      how3title: 'Switch anytime', how3desc: 'Already found the ad? Hit "Find product" to jump straight to shopping.',
+      how4title: 'Works everywhere', how4desc: 'Available in Swedish and English. Searches relevant to your region automatically.',
+      loading: 'Searching...', resultsTabAds: 'Ads', resultsTabProducts: 'Products',
+      adsFound: 'ads found', productsFound: 'shopping results',
+      resultsForAds: 'Ads for', resultsForProducts: 'Products for',
+      demoMode: '⚡ Demo mode — real ads coming soon',
+      findProduct: '🛍️ Find product', viewAd: 'View ad →',
+      modalTitle: 'Find this product', modalClose: 'Close',
+      comparePrice: 'Compare prices', shopOnline: 'Shop online', bestPrice: 'Best price in Sweden', usedNew: 'Used & new',
+    },
+    sv: {
+      heroTag: '🔍 Annons & Produktsök',
+      heroTitle: 'Hitta <span class="grad1">annonsen.</span><br>Hitta <span class="grad2">produkten.</span>',
+      heroSub: 'Sök efter en annons du sett — eller hitta en produkt du vill köpa. Byt läge när som helst.',
+      tabAds: 'Hitta Annonser', tabProducts: 'Hitta Produkter',
+      searchPlaceholderAds: 't.ex. Nike löparskor annons, Spotify-erbjudande...',
+      searchPlaceholderProducts: 't.ex. trådlösa hörlurar, röda sneakers...',
+      findItAds: 'Hitta annons', findItProducts: 'Hitta produkt',
+      recentLabel: 'Senaste sökningar', examplesLabel: 'Prova att söka på',
+      howTag: 'Hur det fungerar', howTitle: 'Två verktyg. <em>En sökning.</em>',
+      how1title: 'Hitta annonsen', how1desc: 'Såg en annons och kan inte hitta den igen? Beskriv den så hittar vi den åt dig.',
+      how2title: 'Hitta produkten', how2desc: 'Vill du köpa något du sett i en annons? Byt till produktläge och vi hittar det i alla stora butiker.',
+      how3title: 'Byt när som helst', how3desc: 'Hittade du annonsen? Tryck "Hitta produkt" för att gå direkt till shopping.',
+      how4title: 'Fungerar överallt', how4desc: 'Tillgänglig på svenska och engelska. Söker automatiskt relevant för din region.',
+      loading: 'Söker...', resultsTabAds: 'Annonser', resultsTabProducts: 'Produkter',
+      adsFound: 'annonser hittade', productsFound: 'shoppingresultat',
+      resultsForAds: 'Annonser för', resultsForProducts: 'Produkter för',
+      demoMode: '⚡ Demoläge — riktiga annonser kommer snart',
+      findProduct: '🛍️ Hitta produkt', viewAd: 'Visa annons →',
+      modalTitle: 'Hitta produkten', modalClose: 'Stäng',
+      comparePrice: 'Jämför priser', shopOnline: 'Handla online', bestPrice: 'Bästa priset i Sverige', usedNew: 'Begagnat & nytt',
+    }
+  };
+
   function setLang(lang) {
     currentLang = lang;
     document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll(`.lang-btn`).forEach(b => {
-      if (b.textContent.trim().toLowerCase() === lang) b.classList.add('active');
-    });
+    document.querySelectorAll('.lang-btn').forEach(b => { if (b.textContent.trim().toLowerCase() === lang) b.classList.add('active'); });
+    const t = T[lang];
+    document.getElementById('heroTag').innerHTML = t.heroTag;
+    document.getElementById('heroTitle').innerHTML = t.heroTitle;
+    document.getElementById('heroSub').textContent = t.heroSub;
+    document.getElementById('tabAdsLabel').textContent = t.tabAds;
+    document.getElementById('tabProductsLabel').textContent = t.tabProducts;
+    document.getElementById('recentLabel').textContent = t.recentLabel;
+    document.getElementById('examplesLabel').textContent = t.examplesLabel;
+    document.getElementById('howTag').textContent = t.howTag;
+    document.getElementById('howTitle').innerHTML = t.howTitle;
+    document.getElementById('how1title').textContent = t.how1title;
+    document.getElementById('how1desc').textContent = t.how1desc;
+    document.getElementById('how2title').textContent = t.how2title;
+    document.getElementById('how2desc').textContent = t.how2desc;
+    document.getElementById('how3title').textContent = t.how3title;
+    document.getElementById('how3desc').textContent = t.how3desc;
+    document.getElementById('how4title').textContent = t.how4title;
+    document.getElementById('how4desc').textContent = t.how4desc;
+    document.getElementById('loadingText').textContent = t.loading;
+    document.getElementById('resultsTabAdsLabel').textContent = t.resultsTabAds;
+    document.getElementById('resultsTabProductsLabel').textContent = t.resultsTabProducts;
+    document.getElementById('demoBadge').textContent = t.demoMode;
+    updateSearchUI();
+  }
 
-    // Update all text elements
-    document.querySelectorAll(`[data-${lang}]`).forEach(el => {
-      const text = el.getAttribute(`data-${lang}`);
-      if (el.tagName === 'INPUT') {
-        el.placeholder = el.getAttribute(`data-${lang}-placeholder`) || el.placeholder;
-      } else {
-        el.innerHTML = text;
-      }
-    });
+  function setMode(mode) {
+    currentMode = mode;
+    const tabAds = document.getElementById('homeTabAds');
+    const tabProducts = document.getElementById('homeTabProducts');
+    tabAds.className = 'mode-tab' + (mode === 'ads' ? ' active-ads' : '');
+    tabProducts.className = 'mode-tab' + (mode === 'products' ? ' active-products' : '');
+    updateSearchUI();
+  }
 
-    // Update placeholders
-    document.querySelectorAll(`[data-${lang}-placeholder]`).forEach(el => {
-      el.placeholder = el.getAttribute(`data-${lang}-placeholder`);
-    });
+  function updateSearchUI() {
+    const t = T[currentLang];
+    const box = document.getElementById('homeSearchBox');
+    const icon = document.getElementById('homeSearchIcon');
+    const input = document.getElementById('homeInput');
+    const btn = document.getElementById('homeSearchBtn');
+    if (currentMode === 'ads') {
+      box.className = 'search-box mode-ads';
+      icon.textContent = '🎯';
+      input.placeholder = t.searchPlaceholderAds;
+      btn.className = 'search-btn-ads';
+      btn.textContent = t.findItAds;
+    } else {
+      box.className = 'search-box mode-products';
+      icon.textContent = '🛍️';
+      input.placeholder = t.searchPlaceholderProducts;
+      btn.className = 'search-btn-products';
+      btn.textContent = t.findItProducts;
+    }
+  }
+
+  function switchResultsMode(mode) {
+    currentMode = mode;
+    const tabAds = document.getElementById('resultsTabAds');
+    const tabProducts = document.getElementById('resultsTabProducts');
+    tabAds.className = 'results-tab' + (mode === 'ads' ? ' active-ads' : '');
+    tabProducts.className = 'results-tab' + (mode === 'products' ? ' active-products' : '');
+    if (lastQuery) renderResults(lastQuery, lastAdsData, lastIsDemo);
   }
 
   // RECENT SEARCHES
-  function getRecent() {
-    try { return JSON.parse(localStorage.getItem('adscout_recent') || '[]'); } catch { return []; }
-  }
-
+  function getRecent() { try { return JSON.parse(localStorage.getItem('scouto_recent') || '[]'); } catch { return []; } }
   function saveRecent(query) {
-    let recent = getRecent().filter(q => q.toLowerCase() !== query.toLowerCase());
-    recent.unshift(query);
-    recent = recent.slice(0, 6);
-    try { localStorage.setItem('adscout_recent', JSON.stringify(recent)); } catch {}
+    let r = getRecent().filter(q => q.toLowerCase() !== query.toLowerCase());
+    r.unshift(query); r = r.slice(0, 6);
+    try { localStorage.setItem('scouto_recent', JSON.stringify(r)); } catch {}
     renderRecent();
   }
-
   function renderRecent() {
     const recent = getRecent();
     const section = document.getElementById('recentSection');
     const chips = document.getElementById('recentChips');
-    if (recent.length === 0) { section.style.display = 'none'; return; }
+    if (!recent.length) { section.style.display = 'none'; return; }
     section.style.display = 'block';
     chips.innerHTML = recent.map(q => `
-      <div class="recent-chip" onclick="quickSearch('${q.replace(/'/g, "\\'")}')">
+      <div class="recent-chip" onclick="quickSearch('${q.replace(/'/g,"\\'")}')">
         🕐 ${q}
-        <span class="remove" onclick="event.stopPropagation();removeRecent('${q.replace(/'/g, "\\'")}')">✕</span>
-      </div>
-    `).join('');
+        <span class="remove-btn" onclick="event.stopPropagation();removeRecent('${q.replace(/'/g,"\\'")}')">✕</span>
+      </div>`).join('');
   }
-
-  function removeRecent(query) {
-    let recent = getRecent().filter(q => q !== query);
-    try { localStorage.setItem('adscout_recent', JSON.stringify(recent)); } catch {}
+  function removeRecent(q) {
+    let r = getRecent().filter(x => x !== q);
+    try { localStorage.setItem('scouto_recent', JSON.stringify(r)); } catch {}
     renderRecent();
   }
-
   renderRecent();
 
-  // SEARCH
   document.getElementById('homeInput').addEventListener('keypress', e => { if (e.key === 'Enter') searchAds(); });
   document.getElementById('resultsInput').addEventListener('keypress', e => { if (e.key === 'Enter') searchAds(); });
 
-  function quickSearch(term) {
-    document.getElementById('homeInput').value = term;
-    searchAds();
-  }
+  function quickSearch(term) { document.getElementById('homeInput').value = term; searchAds(); }
 
   function goHome() {
     document.getElementById('resultsPage').style.display = 'none';
@@ -386,6 +471,7 @@
     if (!query) return;
 
     saveRecent(query);
+    lastQuery = query;
 
     document.getElementById('homePage').style.display = 'none';
     document.getElementById('resultsPage').style.display = 'none';
@@ -395,84 +481,93 @@
     try {
       const res = await fetch(`/search?q=${encodeURIComponent(query)}`);
       const data = await res.json();
-      showResults(query, data);
-    } catch(err) {
-      showResults(query, { error: true });
+      const ads = data.data || [];
+      const isDemo = data.demo || data.error || ads.length === 0;
+      lastAdsData = ads;
+      lastIsDemo = isDemo;
+      document.getElementById('loading').style.display = 'none';
+      renderResults(query, ads, isDemo);
+    } catch {
+      lastAdsData = [];
+      lastIsDemo = true;
+      document.getElementById('loading').style.display = 'none';
+      renderResults(query, [], true);
     }
   }
 
-  function showResults(query, data) {
-    document.getElementById('loading').style.display = 'none';
+  function renderResults(query, ads, isDemo) {
     document.getElementById('resultsPage').style.display = 'block';
     document.getElementById('resultsInput').value = query;
-    document.getElementById('resultsQuery').textContent = currentLang === 'sv' ? `Resultat för "${query}"` : `Results for "${query}"`;
+    const t = T[currentLang];
 
-    const ads = data.data || [];
-    const isDemo = data.demo || data.error || ads.length === 0;
-    document.getElementById('demoBadge').style.display = isDemo ? 'block' : 'none';
+    // Update tab states
+    document.getElementById('resultsTabAds').className = 'results-tab' + (currentMode === 'ads' ? ' active-ads' : '');
+    document.getElementById('resultsTabProducts').className = 'results-tab' + (currentMode === 'products' ? ' active-products' : '');
 
-    const displayAds = ads.length > 0 ? ads : getMockAds(query);
-    document.getElementById('resultsCount').textContent = displayAds.length + (currentLang === 'sv' ? ' annonser hittade' : ' ads found');
-
-    const results = document.getElementById('results');
-    results.innerHTML = '';
-    displayAds.forEach((ad, i) => {
-      const name = ad.page_name || query;
-      const body = ad.ad_creative_body || (currentLang === 'sv' ? 'Ingen beskrivning tillgänglig.' : 'No description available.');
-      const card = document.createElement('div');
-      card.className = 'ad-card';
-      card.style.animationDelay = (i * 0.07) + 's';
-      card.innerHTML = `
-        <div class="ad-card-header">
-          <div class="ad-avatar">${name.charAt(0).toUpperCase()}</div>
-          <div>
-            <div class="ad-page">${name}</div>
-            <div class="ad-platform">Facebook / Instagram</div>
+    if (currentMode === 'ads') {
+      document.getElementById('resultsQuery').textContent = `${t.resultsForAds} "${query}"`;
+      document.getElementById('demoBadge').style.display = isDemo ? 'block' : 'none';
+      const displayAds = ads.length > 0 ? ads : getMockAds(query);
+      document.getElementById('resultsCount').textContent = displayAds.length + ' ' + t.adsFound;
+      const results = document.getElementById('results');
+      results.innerHTML = '';
+      displayAds.forEach((ad, i) => {
+        const name = ad.page_name || query;
+        const body = ad.ad_creative_body || 'No description available.';
+        const card = document.createElement('div');
+        card.className = 'ad-card';
+        card.style.animationDelay = (i * 0.07) + 's';
+        card.innerHTML = `
+          <div class="ad-card-header">
+            <div class="ad-avatar">${name.charAt(0).toUpperCase()}</div>
+            <div><div class="ad-page">${name}</div><div class="ad-platform">Facebook / Instagram</div></div>
           </div>
-        </div>
-        <div class="ad-body">${body}</div>
-        <div class="ad-footer">
-          <span class="ad-tag">${isDemo ? 'Demo' : 'Live ad'}</span>
-          <button class="find-product-btn" onclick="findProduct('${name.replace(/'/g, "\\'")}', '${query.replace(/'/g, "\\'")}')">🛍️ ${currentLang === 'sv' ? 'Hitta produkt' : 'Find product'}</button>
-          ${ad.ad_snapshot_url ? `<a class="ad-link" href="${ad.ad_snapshot_url}" target="_blank">${currentLang === 'sv' ? 'Visa annons →' : 'View ad →'}</a>` : ''}
-        </div>
-      `;
-      results.appendChild(card);
-    });
+          <div class="ad-body">${body}</div>
+          <div class="ad-footer">
+            <span class="ad-tag">${isDemo ? 'Demo' : 'Live'}</span>
+            <button class="find-product-btn" onclick="findProduct('${query.replace(/'/g,"\\'")}')">${t.findProduct}</button>
+            ${ad.ad_snapshot_url ? `<a class="ad-link" href="${ad.ad_snapshot_url}" target="_blank">${t.viewAd}</a>` : ''}
+          </div>`;
+        results.appendChild(card);
+      });
+    } else {
+      // PRODUCTS MODE
+      document.getElementById('resultsQuery').textContent = `${t.resultsForProducts} "${query}"`;
+      document.getElementById('demoBadge').style.display = 'none';
+      const searchTerm = encodeURIComponent(query);
+      const shops = [
+        { icon: '🛒', name: 'Google Shopping', desc: t.comparePrice, url: `https://www.google.com/search?q=${searchTerm}&tbm=shop` },
+        { icon: '📦', name: 'Amazon', desc: t.shopOnline, url: `https://www.amazon.se/s?k=${searchTerm}` },
+        { icon: '💰', name: 'PriceRunner', desc: t.bestPrice, url: `https://www.pricerunner.se/search?search=${searchTerm}` },
+        { icon: '🏷️', name: 'Tradera', desc: t.usedNew, url: `https://www.tradera.com/search?q=${searchTerm}` },
+        { icon: '👟', name: 'Zalando', desc: currentLang === 'sv' ? 'Mode & skor' : 'Fashion & shoes', url: `https://www.zalando.se/catalogsearch/result/?q=${searchTerm}` },
+        { icon: '🏠', name: 'IKEA', desc: currentLang === 'sv' ? 'Hem & möbler' : 'Home & furniture', url: `https://www.ikea.com/se/sv/search/?q=${searchTerm}` },
+      ];
+      document.getElementById('resultsCount').textContent = shops.length + ' ' + t.productsFound;
+      const results = document.getElementById('results');
+      results.innerHTML = '';
+      shops.forEach((shop, i) => {
+        const card = document.createElement('a');
+        card.className = 'product-card';
+        card.href = shop.url;
+        card.target = '_blank';
+        card.style.animationDelay = (i * 0.07) + 's';
+        card.innerHTML = `
+          <div class="product-icon">${shop.icon}</div>
+          <div class="product-name">${shop.name}</div>
+          <div class="product-desc">${shop.desc} — "${query}"</div>
+          <div class="product-cta">Search here →</div>`;
+        results.appendChild(card);
+      });
+    }
   }
 
-  // FIND PRODUCT MODAL
-  function findProduct(pageName, query) {
-    const searchTerm = encodeURIComponent(query);
-    document.getElementById('modalTitle').textContent = currentLang === 'sv' ? `Hitta produkten` : `Find this product`;
-    document.getElementById('modalDesc').textContent = currentLang === 'sv'
-      ? `Sök efter "${query}" på dessa shoppingplattformar.`
-      : `Search for "${query}" across these shopping platforms.`;
-
-    document.getElementById('modalLinks').innerHTML = `
-      <a class="modal-link" href="https://www.google.com/search?q=${searchTerm}&tbm=shop" target="_blank">
-        <span class="modal-link-icon">🛒</span>
-        <div><div class="modal-link-text">Google Shopping</div><div class="modal-link-sub">${currentLang === 'sv' ? 'Jämför priser' : 'Compare prices'}</div></div>
-      </a>
-      <a class="modal-link" href="https://www.amazon.se/s?k=${searchTerm}" target="_blank">
-        <span class="modal-link-icon">📦</span>
-        <div><div class="modal-link-text">Amazon</div><div class="modal-link-sub">${currentLang === 'sv' ? 'Handla online' : 'Shop online'}</div></div>
-      </a>
-      <a class="modal-link" href="https://www.pricerunner.se/search?search=${searchTerm}" target="_blank">
-        <span class="modal-link-icon">💰</span>
-        <div><div class="modal-link-text">PriceRunner</div><div class="modal-link-sub">${currentLang === 'sv' ? 'Bästa priset i Sverige' : 'Best price in Sweden'}</div></div>
-      </a>
-      <a class="modal-link" href="https://www.tradera.com/search?q=${searchTerm}" target="_blank">
-        <span class="modal-link-icon">🏷️</span>
-        <div><div class="modal-link-text">Tradera</div><div class="modal-link-sub">${currentLang === 'sv' ? 'Begagnat & nytt' : 'Used & new'}</div></div>
-      </a>
-    `;
-    document.getElementById('productModal').style.display = 'flex';
+  function findProduct(query) {
+    currentMode = 'products';
+    renderResults(query, lastAdsData, lastIsDemo);
   }
 
-  function closeModal(e) {
-    if (e.target.id === 'productModal') document.getElementById('productModal').style.display = 'none';
-  }
+  function closeModal(e) { if (e.target.id === 'productModal') document.getElementById('productModal').style.display = 'none'; }
 
   function getMockAds(query) {
     const sv = currentLang === 'sv';
