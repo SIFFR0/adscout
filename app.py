@@ -28,7 +28,12 @@ def search():
     data = response.json()
 
     if 'error' in data:
-        return jsonify({"data": [], "demo": True})
+        return jsonify({"data": [
+            {"page_name": query + " Official", "ad_creative_body": "Discover our latest collection. Shop now and get free shipping on orders!"},
+            {"page_name": query + " Sverige", "ad_creative_body": "Limited time offer — 30% off everything this week only. Don't miss out!"},
+            {"page_name": query + " Store", "ad_creative_body": "New arrivals just dropped. Find exactly what you're looking for today."},
+            {"page_name": query + " SE", "ad_creative_body": "Thousands of happy customers. Try now with free 14-day returns."},
+        ], "demo": True})
 
     return jsonify(data)
 
