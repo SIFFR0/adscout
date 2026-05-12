@@ -304,10 +304,6 @@
   let lastAdsData = [];
   let lastIsDemo = false;
 
-  // AUTO DETECT LANGUAGE
-  const browserLang = navigator.language || navigator.userLanguage;
-  if (browserLang.startsWith('sv')) setLang('sv');
-
   const T = {
     en: {
       heroTag: '🔍 Ad & Product Search',
@@ -354,6 +350,10 @@
       comparePrice: 'Jämför priser', shopOnline: 'Handla online', bestPrice: 'Bästa priset i Sverige', usedNew: 'Begagnat & nytt',
     }
   };
+
+  // AUTO DETECT LANGUAGE
+  const browserLang = navigator.language || navigator.userLanguage;
+  if (browserLang.startsWith('sv')) setLang('sv');
 
   function setLang(lang) {
     currentLang = lang;
