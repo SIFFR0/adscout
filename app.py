@@ -6,7 +6,7 @@ import requests
 app = Flask(__name__)
 CORS(app)
 
-META_TOKEN = "EAANlrkUIHyMBRapFSlw7yPzawNGUICpMN7bzruKoZBVex5eD63HdeleiCTZBQbSMTNmQMuUuS8qZCN7JoLenQkHvFcHkDJFdHkWbmxXaWdRJELuiDWlzydBF1805KZBH9LKZCB7rGVHz6mm1YYxBOFCB8XpfAYZBVTGMSF42ATbM05CTmVfDVUYRO90SgsjzNjxCixNmR9F4buIOB6G0JMrPeMtDGZAOtLFQaIJpYKZAQCOT4GeJggxAPZCZCNf9pj2UjxT4ZBz8xT5neDgpbjAqL6bU5A1LhzZAxBG1sdkSt9YZD"
+META_TOKEN = "EAANlrkUIHyMBRaHZBbRndcZAk75A6iZAQ10uBVA4jYmgrYmtU6SCagO8JWYYbrpuksrxNWgeYprwXS2rnUZBZC7PHnmxfVnG5Ci4qaThbV0adbDh6RfUegL5EisrgQamQar5Dd05g4iWCxWeVhZC3rg8GQiUKqJ21DTlZBZB4lExMIN4Hrz3I0kNZCXAZBEUEpc5rcCSd6GDsxZAEFfxHBcyZBynYUwCBlVwdzbHYXLPWLSp4kjXHAYVO24UkAZDZD"
 
 @app.route('/')
 def index():
@@ -25,7 +25,12 @@ def search():
         'limit': 10
     }
     response = requests.get(url, params=params)
-    return jsonify(response.json())
+    data = response.json()
+
+    if 'error' in data:
+        return jsonify({"data": [], "demo": True})
+
+    return jsonify(data)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=False)
